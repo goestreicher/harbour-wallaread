@@ -63,12 +63,6 @@ Dialog {
         contentHeight: column.height
         width: parent.width
 
-        PullDownMenu {
-            MenuItem {
-                text: "Export"
-            }
-        }
-
         Column {
             id: column
             anchors.fill: parent

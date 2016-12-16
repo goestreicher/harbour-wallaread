@@ -538,33 +538,6 @@ function checkDatabaseStatus( db )
     if ( db.version === "" ) {
         createLatestDatabase( db );
     }
-
-    if ( db.version === "0.1" ) {
-        db.transaction(
-            function( tx ) {
-                tx.executeSql(
-                                "CREATE TABLE IF NOT EXISTS articles (" +
-                                "id INTEGER PRIMARY KEY, " +
-                                "server INTEGER REFERENCES servers(id), " +
-                                "created TEXT, " +
-                                "updated TEXT, " +
-                                "mimetype TEXT, " +
-                                "language TEXT, " +
-                                "readingTime INTEGER DEFAULT 0, " +
-                                "url TEXT, " +
-                                "domain TEXT, " +
-                                "archived INTEGER DEFAULT 0, " +
-                                "starred INTEGER DEFAULT 0, " +
-                                "title TEXT, " +
-                                "previewPicture BLOB, " +
-                                "content TEXT" +
-                                ")"
-                             );
-
-                db.changeVersion( db.version, DBVERSION );
-            }
-        )
-    }
 }
 
 function createLatestDatabase( db )

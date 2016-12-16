@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+X-Nemo-Application-Type=silica-qt5
+Icon=harbour-wallaread
+Exec=harbour-wallaread
+Name=WallaRead

@@ -116,6 +116,7 @@ Page {
                         anchors.centerIn: parent
                         text: model.unread
                         font.pixelSize: Theme.fontSizeSmall
+                        color: listEntry.highlighted ? Theme.highlightBackgroundColor : Theme.primaryColor
                     }
                 }
 

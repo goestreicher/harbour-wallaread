@@ -98,6 +98,38 @@ Page {
             id: listEntry
             width: parent.width
 
+            RemorseItem {
+                id: serverRemorse
+            }
+
+            function showRemorse( idx ) {
+                serverRemorse.execute(
+                    listEntry,
+                    qsTr( "Deleting" ),
+                    function() {
+                        var server = serversModel.get( idx )
+                        WallaBase.deleteServer( server.id )
+                        serversPage.updateServerList()
+                    }
+                )
+            }
+
+            menu: ContextMenu {
+                id: serverMenu
+                width: listEntry.width
+
+                IconButton {
+                    id: deleteButton
+                    icon.source: "image://theme/icon-m-delete"
+                    x: Theme.horizontalPageMargin
+
+                    onClicked: {
+                        serverMenu.hide()
+                        listEntry.showRemorse( index )
+                    }
+                }
+            }
+
             Item {
                 width: parent.width - 2 * Theme.horizontalPageMargin
                 x: Theme.horizontalPageMargin
@@ -105,7 +137,7 @@ Page {
 
                 Rectangle {
                     id: serverCountLabel
-                    height: listEntry.height - 1.5 * Theme.horizontalPageMargin
+                    height: Theme.fontSizeSmall * 1.5
                     width: height
                     radius: 2
                     color: listEntry.highlighted ? Theme.primaryColor : Theme.highlightBackgroundColor

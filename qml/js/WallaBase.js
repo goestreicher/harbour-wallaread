@@ -166,6 +166,20 @@ function updateServer( id, props )
     );
 }
 
+function deleteServer( id )
+{
+    var db = getDatabase();
+
+    db.transaction(
+        function( tx ) {
+            console.debug( "Deleting server " + id );
+            // TODO: try/catch here when error management is in place in the UI
+            tx.executeSql( "DELETE FROM articles WHERE server=?", [ id ] );
+            tx.executeSql( "DELETE FROM servers WHERE id=?", [ id ] );
+        }
+    );
+}
+
 function setServerLastSync( id, last )
 {
     var db = getDatabase();

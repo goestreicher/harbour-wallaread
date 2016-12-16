@@ -65,7 +65,6 @@ Dialog {
 
         Column {
             id: column
-            anchors.fill: parent
             width: parent.width
 
             DialogHeader {

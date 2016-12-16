@@ -65,7 +65,7 @@ Page {
         }
 
         ViewPlaceholder {
-            enabled: serversModel.count == 0
+            enabled: serversModel.loaded && serversModel.count == 0
             text: qsTr( "No server found, use the pulley menu and select 'New Server'" )
         }
 

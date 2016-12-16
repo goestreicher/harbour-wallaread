@@ -54,7 +54,7 @@ Page {
             MenuItem {
                 text: qsTr( "New Server" )
                 onClicked: {
-                    var dlg = pageStack.push( Qt.resolvedUrl( "ServerSettingsPage.qml" ), { serverId: -1 } )
+                    var dlg = pageStack.push( Qt.resolvedUrl( "ServerSettingsDialog.qml" ), { serverId: -1 } )
                     dlg.accepted.connect( serverListChanged )
                 }
             }

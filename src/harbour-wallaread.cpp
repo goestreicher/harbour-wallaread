@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     //
     // To display the view, call "show()" (will show fullscreen on device).
 
-    qmlRegisterType<HttpRequester>( "net.kamago.harbour.wallaread", 1, 0, "HttpRequester" );
+    qmlRegisterType<HttpRequester>( "harbour.wallaread", 1, 0, "HttpRequester" );
 
     return SailfishApp::main(argc, argv);
 }

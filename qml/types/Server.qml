@@ -20,7 +20,7 @@
  */
 
 import QtQuick 2.0
-import net.kamago.harbour.wallaread 1.0
+import harbour.wallaread 1.0
 
 import "../js/WallaBase.js" as WallaBase
 

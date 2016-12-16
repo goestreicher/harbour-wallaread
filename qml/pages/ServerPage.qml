@@ -217,7 +217,6 @@ Page {
                         icon.source: "image://theme/icon-m-delete"
 
                         onClicked: {
-                            listEntry.enabled = false
                             articleMenu.hide()
                             listEntry.showRemorse( index )
                         }

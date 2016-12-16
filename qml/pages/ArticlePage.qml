@@ -43,8 +43,8 @@ Page {
             "<html>" +
             "<head>" +
                 "<style type=\"text/css\">" +
-                "article { font-family: sans-serif; font-size: 12px; }" +
-                "article h1 { font-size: 24px; }" +
+                "article { font-family: sans-serif; font-size: 16px; }" +
+                "article h1 { font-size: 32px; }" +
                 "</style>" +
             "</head>" +
             "<body>" +

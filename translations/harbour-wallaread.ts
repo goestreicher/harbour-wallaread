@@ -119,6 +119,10 @@
         <source>No servers configured yet, create your first one with the Settings menu</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Resetting database</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>

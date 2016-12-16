@@ -59,10 +59,21 @@ Page {
         model: serversModel
         visible: serversModel.loaded
 
+        RemorsePopup {
+            id: remorsePopup
+        }
+
         PullDownMenu {
             MenuItem {
                 text: qsTr( "Reset database" )
-                onClicked: resetDatabase()
+                onClicked: {
+                    remorsePopup.execute(
+                        qsTr( "Resetting database" ),
+                        function() {
+                            serversPage.resetDatabase()
+                        }
+                    )
+                }
             }
 
             MenuItem {

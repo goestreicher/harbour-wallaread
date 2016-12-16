@@ -26,6 +26,7 @@ Page {
     id: articlePage
     allowedOrientations: Orientation.All
 
+    property string title
     property string content
 
     SilicaWebView {
@@ -33,7 +34,27 @@ Page {
         anchors.fill: parent
 
         Component.onCompleted: {
-            loadHtml( articlePage.content )
+            loadHtml( wrapArticleContent() )
         }
+    }
+
+    function wrapArticleContent() {
+        var html =
+            "<html>" +
+            "<head>" +
+                "<style type=\"text/css\">" +
+                "article { font-family: sans-serif; font-size: 12px; }" +
+                "article h1 { font-size: 24px; }" +
+                "</style>" +
+            "</head>" +
+            "<body>" +
+                "<article>" +
+                "<h1>" + articlePage.title + "</h1>" +
+                articlePage.content +
+                "</article>" +
+            "</body>" +
+            "</html>"
+
+        return html
     }
 }

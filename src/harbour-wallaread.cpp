@@ -23,6 +23,8 @@
 #include <QtQuick>
 #endif
 
+#include <QtQml>
+
 #include <sailfishapp.h>
 
 #include "httprequester.h"

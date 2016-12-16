@@ -88,6 +88,7 @@ Dialog {
                 label: qsTr( "URL" )
                 placeholderText: qsTr( "Server URL" )
                 text: serverSettings.url
+                inputMethodHints: Qt.ImhUrlCharactersOnly
                 EnterKey.enabled: text.length > 0
                 EnterKey.onClicked: userField.focus = true
             }
@@ -98,6 +99,7 @@ Dialog {
                 label: qsTr( "Login" )
                 placeholderText: qsTr( "User Login" )
                 text: serverSettings.user
+                inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
                 EnterKey.enabled: text.length > 0
                 EnterKey.onClicked: passwordField.focus = true
             }
@@ -117,6 +119,7 @@ Dialog {
                 label: qsTr( "Client ID" )
                 placeholderText: qsTr( "Client ID" )
                 text: serverSettings.clientId
+                inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase | Qt.ImhSensitiveData
                 EnterKey.enabled: text.length > 0
                 EnterKey.onClicked: clientSecretField.focus = true
             }
@@ -127,6 +130,7 @@ Dialog {
                 label: qsTr( "Client Secret" )
                 placeholderText: qsTr( "Client Secret" )
                 text: serverSettings.clientSecret
+                inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase | Qt.ImhSensitiveData
             }
         }
     }

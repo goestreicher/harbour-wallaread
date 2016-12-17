@@ -309,7 +309,7 @@ function getArticles( serverId, cb, filter )
     );
 }
 
-function articleExists( id, cb )
+function articleExists( server, id, cb )
 {
     var db = getDatabase();
 
@@ -319,7 +319,7 @@ function articleExists( id, cb )
             var err = null;
 
             try {
-                var res = tx.executeSql( "SELECT COUNT(*) AS count FROM articles WHERE id=?", [ id ] );
+                var res = tx.executeSql( "SELECT COUNT(*) AS count FROM articles WHERE id=? AND server=?", [ id, server ] );
                 if ( res.rows.length === 1 ) {
                     exists = ( res.rows[0].count === 0 ? false : true );
                 }
@@ -339,6 +339,7 @@ function articleExists( id, cb )
 function saveArticle( props )
 {
     articleExists(
+        props.server,
         props.id,
         function( exists, err ) {
             if ( err !== null ) {
@@ -392,7 +393,7 @@ function _updateArticle( props )
     db.transaction(
         function( tx ) {
             tx.executeSql(
-                            "UPDATE articles SET created=?, updated=?, mimetype=?, language=?, readingTime=?, url=?, domain=?, archived=?, starred=?, title=?, content=? WHERE id=?",
+                            "UPDATE articles SET created=?, updated=?, mimetype=?, language=?, readingTime=?, url=?, domain=?, archived=?, starred=?, title=?, content=? WHERE id=? AND server=?",
                             [
                                 props.created,
                                 props.updated,
@@ -405,21 +406,22 @@ function _updateArticle( props )
                                 props.starred,
                                 props.title,
                                 props.content,
-                                props.id
+                                props.id,
+                                props.server
                             ]
                          );
         }
     );
 }
 
-function deleteArticle( id )
+function deleteArticle( server, id )
 {
     var db = getDatabase();
 
     db.transaction(
         function( tx ) {
             console.debug( "Delete article " + id + " from database" );
-            tx.executeSql( "DELETE FROM articles WHERE id=?", [ id ] );
+            tx.executeSql( "DELETE FROM articles WHERE id=? AND server=?", [ id, server ] );
         }
     );
 }
@@ -507,24 +509,24 @@ function _downloadNextArticles( url, token, page, cb )
     http.send();
 }
 
-function setArticleStar( id, star )
+function setArticleStar( server, id, star )
 {
     var db = getDatabase();
 
     db.transaction(
         function( tx ) {
-            tx.executeSql( "UPDATE articles SET starred=? WHERE id=?", [ star, id ] );
+            tx.executeSql( "UPDATE articles SET starred=? WHERE id=? AND server=?", [ star, id, server ] );
         }
     );
 }
 
-function setArticleRead( id, read )
+function setArticleRead( server, id, read )
 {
     var db = getDatabase();
 
     db.transaction(
         function( tx ) {
-            tx.executeSql( "UPDATE articles SET archived=? WHERE id=?", [ read, id ] );
+            tx.executeSql( "UPDATE articles SET archived=? WHERE id=? AND server=?", [ read, id, server ] );
         }
     );
 }

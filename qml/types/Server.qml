@@ -188,7 +188,7 @@ Item {
         else {
             console.debug( "Done toggling starred status for article " + article.id )
             var json = JSON.parse( content )
-            WallaBase.setArticleStar( article.id, json.is_starred )
+            WallaBase.setArticleStar( serverId, article.id, json.is_starred )
             cb( json.is_starred, null )
         }
     }
@@ -230,7 +230,7 @@ Item {
         else {
             console.debug( "Done toggling archived status for article " + article.id )
             var json = JSON.parse( content )
-            WallaBase.setArticleRead( article.id, json.is_archived )
+            WallaBase.setArticleRead( serverId, article.id, json.is_archived )
             cb( json.is_archived, null )
         }
     }
@@ -268,7 +268,7 @@ Item {
         }
         else {
             console.debug( "Done deleting article " + id )
-            WallaBase.deleteArticle( id )
+            WallaBase.deleteArticle( serverId, id )
             cb( null )
         }
     }

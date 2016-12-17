@@ -19,7 +19,6 @@ SOURCES += src/harbour-wallaread.cpp \
 
 OTHER_FILES += qml/harbour-wallaread.qml \
     qml/cover/CoverPage.qml \
-    rpm/harbour-wallaread.changes.in \
     rpm/harbour-wallaread.spec \
     rpm/harbour-wallaread.yaml \
     translations/*.ts \
@@ -50,4 +49,5 @@ DISTFILES += \
     qml/pages/ServersPage.qml \
     qml/pages/SettingsPage.qml \
     qml/types/Server.qml \
-    qml/types/ServerSettings.qml
+    qml/types/ServerSettings.qml \
+    rpm/harbour-wallaread.changes

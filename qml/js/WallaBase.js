@@ -277,6 +277,82 @@ function _sendAuthRequest( props, cb )
   Articles management
  */
 
+function syncDeletedArticles( timerSource, props, cb )
+{
+    var db = getDatabase();
+
+    db.readTransaction(
+        function( tx ) {
+            var res = tx.executeSql( "SELECT id, url FROM articles WHERE server=?", [ props.id ] );
+            var articles = new Array;
+
+            for ( var i = 0; i < res.rows.length; ++i ) {
+                articles.push( res.rows[i] );
+            }
+
+            var working = false;
+
+            function processArticlesList() {
+                if ( articles.length === 0 ) {
+                    cb();
+                }
+                else {
+                    if ( !working )
+                        timerSource.setTimeout( _checkNextArticle, 100 );
+                    timerSource.setTimeout( processArticlesList, 500 );
+                }
+            }
+
+            function _checkNextArticle() {
+                working = true;
+                var article = articles.pop();
+
+                var url = props.url;
+                if ( url.charAt( url.length - 1 ) !== "/" )
+                    url += "/";
+                url += "api/entries/exists.json";
+
+                var params = "url=";
+                params += encodeURIComponent( article.url );
+                url += "?" + params;
+
+                var http = new XMLHttpRequest;
+
+                http.onreadystatechange = function() {
+                    if ( http.readyState === XMLHttpRequest.DONE ) {
+                        console.debug( "Checking if article " + article.id + " exists, response status is " + http.status );
+                        var json = null;
+
+                        if ( http.status === 200 ) {
+                            try {
+                                json = JSON.parse( http.responseText )
+                            }
+                            catch( e ) {
+                                json = null;
+                            }
+
+                            if ( !json.exists ) {
+                                console.debug( "Article " + article.id + " has been deleted" );
+                                deleteArticle( props.id, article.id );
+                            }
+                        }
+                        // In case of error let's assume that the article exists
+
+                        working = false;
+                    }
+                };
+
+                http.open( "GET", url, true );
+                http.setRequestHeader( "Authorization:", "Bearer " + props.token );
+
+                http.send();
+            }
+
+            timerSource.setTimeout( processArticlesList, 500 );
+        }
+    );
+}
+
 function getArticles( serverId, cb, filter )
 {
     var db = getDatabase();

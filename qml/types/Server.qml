@@ -25,6 +25,8 @@ import harbour.wallaread 1.0
 import "../js/WallaBase.js" as WallaBase
 
 Item {
+    id: server
+
     property int serverId: -1
     property string name
     property string url
@@ -56,6 +58,14 @@ Item {
 
     HttpRequester {
         id: httpRequester
+    }
+
+    function setTimeout( cb, ms ) {
+        var timer = Qt.createQmlObject( "import QtQuick 2.0; Timer {}", server );
+        timer.repeat = false
+        timer.interval = ms
+        timer.triggered.connect( function() { cb(); timer.destroy(); } )
+        timer.start()
     }
 
     function onServerLoaded( props, err ) {
@@ -99,6 +109,19 @@ Item {
 
     function isConnected() {
         return tokenExpiry > Math.floor( (new Date).getTime() / 1000 )
+    }
+
+    function syncDeletedArticles( cb ) {
+        connect(
+            function( err ) {
+                if ( err !== null ) {
+                    error( qsTr( "Failed to connect to server: " ) + err )
+                }
+                else {
+                    WallaBase.syncDeletedArticles( server, { id: serverId, token: accessToken, url: url }, function() { cb(); } )
+                }
+            }
+        )
     }
 
     function getUpdatedArticles() {

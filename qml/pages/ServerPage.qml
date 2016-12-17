@@ -113,7 +113,11 @@ Page {
                 text: qsTr( "Refresh" )
                 onClicked: {
                     articlesModel.loaded = false
-                    server.getUpdatedArticles()
+                    server.syncDeletedArticles(
+                        function() {
+                            server.getUpdatedArticles()
+                        }
+                    )
                 }
             }
         }

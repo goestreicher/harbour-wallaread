@@ -116,6 +116,7 @@ Item {
             function( err ) {
                 if ( err !== null ) {
                     error( qsTr( "Failed to connect to server: " ) + err )
+                    cb()
                 }
                 else {
                     WallaBase.syncDeletedArticles( server, { id: serverId, token: accessToken, url: url }, function() { cb(); } )
@@ -140,12 +141,13 @@ Item {
     }
 
     function onGetUpdatedArticlesDone( articles, err ) {
+        var ret = new Array;
+
         if ( err !== null ) {
             error( qsTr( "Failed to download articles: " ) + err )
         }
         else {
             console.debug( "Retrieved " + articles.length + " new/updated articles" )
-            var ret = new Array
 
             for ( var i = 0; i < articles.length; ++i ) {
                 var current = articles[i];
@@ -170,8 +172,9 @@ Item {
             }
 
             WallaBase.setServerLastSync( serverId, Math.floor( (new Date).getTime() / 1000 ) )
-            articlesDownloaded( ret )
         }
+
+        articlesDownloaded( ret )
     }
 
     function toggleArticleStar( article, cb ) {

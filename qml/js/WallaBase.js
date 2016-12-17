@@ -533,7 +533,7 @@ function setArticleRead( id, read )
   Internal functions
  */
 
-var DBVERSION = "0.2"
+var DBVERSION = "0.3"
 var _db = null;
 
 function getDatabase()
@@ -551,6 +551,9 @@ function checkDatabaseStatus( db )
 {
     if ( db.version === "" ) {
         createLatestDatabase( db );
+    }
+    else if ( db.version === "0.2" ) {
+        _updateSchema_v3( db );
     }
 }
 
@@ -575,7 +578,7 @@ function createLatestDatabase( db )
 
                 tx.executeSql(
                                 "CREATE TABLE IF NOT EXISTS articles (" +
-                                "id INTEGER PRIMARY KEY, " +
+                                "id INTEGER, " +
                                 "server INTEGER REFERENCES servers(id), " +
                                 "created TEXT, " +
                                 "updated TEXT, " +
@@ -588,7 +591,8 @@ function createLatestDatabase( db )
                                 "starred INTEGER DEFAULT 0, " +
                                 "title TEXT, " +
                                 "previewPicture BLOB, " +
-                                "content TEXT" +
+                                "content TEXT, " +
+                                "PRIMARY KEY(id, server)" +
                                 ")"
                              );
 
@@ -609,6 +613,41 @@ function resetDatabase()
             tx.executeSql( "DROP TABLE IF EXISTS articles" );
             db.changeVersion( version, "" );
             createLatestDatabase( db );
+        }
+    );
+}
+
+function _updateSchema_v3( db )
+{
+    db.transaction(
+        function( tx ) {
+            tx.executeSql(
+                            "CREATE TABLE IF NOT EXISTS articles_next (" +
+                            "id INTEGER, " +
+                            "server INTEGER REFERENCES servers(id), " +
+                            "created TEXT, " +
+                            "updated TEXT, " +
+                            "mimetype TEXT, " +
+                            "language TEXT, " +
+                            "readingTime INTEGER DEFAULT 0, " +
+                            "url TEXT, " +
+                            "domain TEXT, " +
+                            "archived INTEGER DEFAULT 0, " +
+                            "starred INTEGER DEFAULT 0, " +
+                            "title TEXT, " +
+                            "previewPicture BLOB, " +
+                            "content TEXT, " +
+                            "PRIMARY KEY(id, server)" +
+                            ")"
+                         );
+            tx.executeSql( "INSERT INTO articles_next SELECT * FROM articles" );
+            tx.executeSql( "DROP TABLE articles" );
+            tx.executeSql( "ALTER TABLE articles_next RENAME TO articles" );
+        },
+        function() {
+        },
+        function() {
+            db.changeVersion( version, "0.3" );
         }
     );
 }

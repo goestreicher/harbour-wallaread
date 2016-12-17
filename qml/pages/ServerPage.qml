@@ -113,7 +113,7 @@ Page {
                 text: qsTr( "Refresh" )
                 onClicked: {
                     articlesModel.loaded = false
-                    server.getArticles()
+                    server.getUpdatedArticles()
                 }
             }
         }

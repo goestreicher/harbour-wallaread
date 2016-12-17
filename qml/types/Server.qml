@@ -101,7 +101,7 @@ Item {
         return tokenExpiry > Math.floor( (new Date).getTime() / 1000 )
     }
 
-    function getArticles() {
+    function getUpdatedArticles() {
         connect(
             function( err ) {
                 if ( err !== null ) {
@@ -110,13 +110,13 @@ Item {
                 else {
                     console.debug( "Downloading articles changes since last sync" )
                     var props = { url: url, since: lastSync, accessToken: accessToken }
-                    WallaBase.downloadArticles( props, onGetArticlesDone )
+                    WallaBase.downloadArticles( props, onGetUpdatedArticlesDone )
                 }
             }
         )
     }
 
-    function onGetArticlesDone( articles, err ) {
+    function onGetUpdatedArticlesDone( articles, err ) {
         if ( err !== null ) {
             error( qsTr( "Failed to download articles: " ) + err )
         }

@@ -293,7 +293,7 @@ function syncDeletedArticles( timerSource, props, cb )
             var working = false;
 
             function processArticlesList() {
-                if ( articles.length === 0 ) {
+                if ( !working && articles.length === 0 ) {
                     cb();
                 }
                 else {

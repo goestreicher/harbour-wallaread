@@ -344,6 +344,8 @@ function syncDeletedArticles( timerSource, props, cb )
 
                 http.open( "GET", url, true );
                 http.setRequestHeader( "Authorization:", "Bearer " + props.token );
+                http.setRequestHeader( "Accept", "application/json" );
+                http.setRequestHeader( "Connection", "close" );
 
                 http.send();
             }
@@ -581,6 +583,8 @@ function _downloadNextArticles( url, token, page, cb )
 
     http.open( "GET", pageUrl, true );
     http.setRequestHeader( "Authorization:", "Bearer " + token );
+    http.setRequestHeader( "Accept", "application/json" );
+    http.setRequestHeader( "Connection", "close" );
 
     http.send();
 }

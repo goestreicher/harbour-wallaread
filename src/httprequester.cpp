@@ -52,6 +52,10 @@ void HttpPatchRequest::start()
 
     QNetworkRequest rq( mUrl );
     rq.setRawHeader( QByteArray( "Authorization" ), authHeader );
+    rq.setRawHeader( QByteArray( "Accept" ), QByteArray( "application/json" ) );
+    rq.setHeader( QNetworkRequest::ContentLengthHeader, mContent.length() );
+    rq.setHeader( QNetworkRequest::ContentTypeHeader, QStringLiteral( "application/json" ) );
+    rq.setRawHeader( QByteArray( "Connection" ), QByteArray( "close" ) );
 
     mReply = mQnam.sendCustomRequest( rq, QByteArray( "PATCH" ), mContentIO );
     connect( mReply, &QNetworkReply::finished, this, &HttpPatchRequest::onRequestDone );
@@ -92,6 +96,8 @@ void HttpDeleteRequest::start()
 
     QNetworkRequest rq( mUrl );
     rq.setRawHeader( QByteArray( "Authorization" ), authHeader );
+    rq.setRawHeader( QByteArray( "Accept" ), QByteArray( "application/json" ) );
+    rq.setRawHeader( QByteArray( "Connection" ), QByteArray( "close" ) );
 
     mReply = mQnam.sendCustomRequest( rq, QByteArray( "DELETE" ) );
     connect( mReply, &QNetworkReply::finished, this, &HttpDeleteRequest::onRequestDone );

@@ -1,3 +1,9 @@
+* Sun Dec 18 2016 Grégory Oestreicher <greg@kamago.net> 0.2-1
+- Fixed synchronization bugs with wallabag.it and maybe other installations
+- Added server deletion from the main page
+- Synchronize articles deleted on the server side
+- Various small bugfixes
+
 * Fri Dec 16 2016 Grégory Oestreicher <greg@kamago.net> 0.1-1
 - Initial release
 

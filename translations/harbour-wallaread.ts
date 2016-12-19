@@ -74,6 +74,13 @@
     </message>
 </context>
 <context>
+    <name>ServerSettings</name>
+    <message>
+        <source>Failed to load server settings: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ServerSettingsDialog</name>
     <message>
         <source>Save</source>

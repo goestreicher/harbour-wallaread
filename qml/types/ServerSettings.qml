@@ -51,7 +51,7 @@ QtObject {
 
     function onServerSettingsLoaded( props, err ) {
         if ( err !== null ) {
-            error( qsTr( "Failed to load server settings: " + err ) )
+            error( qsTr( "Failed to load server settings: " ) + err )
         }
         else {
             name = props.name

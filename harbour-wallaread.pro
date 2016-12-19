@@ -15,7 +15,8 @@ TARGET = harbour-wallaread
 CONFIG += sailfishapp c++11
 
 SOURCES += src/harbour-wallaread.cpp \
-    src/httprequester.cpp
+    src/httprequester.cpp \
+    src/imageembedder.cpp
 
 OTHER_FILES += qml/harbour-wallaread.qml \
     qml/cover/CoverPage.qml \
@@ -37,7 +38,8 @@ CONFIG += sailfishapp_i18n
 #TRANSLATIONS += translations/harbour-wallaread-de.ts
 
 HEADERS += \
-    src/httprequester.h
+    src/httprequester.h \
+    src/imageembedder.h
 
 DISTFILES += \
     qml/js/WallaBase.js \

@@ -60,14 +60,6 @@ Item {
         id: httpRequester
     }
 
-    function setTimeout( cb, ms ) {
-        var timer = Qt.createQmlObject( "import QtQuick 2.0; Timer {}", server );
-        timer.repeat = false
-        timer.interval = ms
-        timer.triggered.connect( function() { cb(); timer.destroy(); } )
-        timer.start()
-    }
-
     function onServerLoaded( props, err ) {
         if ( err !== null ) {
             error( qsTr( "Failed to load server information: " ) + err )
@@ -119,7 +111,7 @@ Item {
                     cb()
                 }
                 else {
-                    WallaBase.syncDeletedArticles( server, { id: serverId, token: accessToken, url: url }, function() { cb(); } )
+                    WallaBase.syncDeletedArticles( { id: serverId, token: accessToken, url: url }, function() { cb(); } )
                 }
             }
         )

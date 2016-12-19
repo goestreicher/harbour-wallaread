@@ -9,6 +9,13 @@
     </message>
 </context>
 <context>
+    <name>ImageEmbedRequest</name>
+    <message>
+        <source>Failed to find the image source</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Server</name>
     <message>
         <source>Failed to load server information: </source>

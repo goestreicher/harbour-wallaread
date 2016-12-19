@@ -28,6 +28,7 @@
 #include <sailfishapp.h>
 
 #include "httprequester.h"
+#include "imageembedder.h"
 
 int main(int argc, char *argv[])
 {
@@ -41,6 +42,7 @@ int main(int argc, char *argv[])
     // To display the view, call "show()" (will show fullscreen on device).
 
     qmlRegisterType<HttpRequester>( "harbour.wallaread", 1, 0, "HttpRequester" );
+    qmlRegisterType<ImageEmbedder>( "harbour.wallaread", 1, 0, "ImageEmbedder" );
 
     return SailfishApp::main(argc, argv);
 }

@@ -33,6 +33,28 @@ var ArticlesFilter = {
 }
 
 /*
+  Timer management, used for the various setTimeout() calls
+ */
+
+var _timerSource = null;
+
+function setTimerSource( source )
+{
+    _timerSource = source;
+}
+
+/*
+  Used to embed images in the articles
+ */
+
+var _imageEmbedder = null;
+
+function setImageEmbedder( embedder )
+{
+    _imageEmbedder = embedder;
+}
+
+/*
   Servers management
  */
 
@@ -277,7 +299,7 @@ function _sendAuthRequest( props, cb )
   Articles management
  */
 
-function syncDeletedArticles( timerSource, props, cb )
+function syncDeletedArticles( props, cb )
 {
     var db = getDatabase();
 
@@ -298,8 +320,8 @@ function syncDeletedArticles( timerSource, props, cb )
                 }
                 else {
                     if ( !working )
-                        timerSource.setTimeout( _checkNextArticle, 100 );
-                    timerSource.setTimeout( processArticlesList, 500 );
+                        _timerSource.setTimeout( _checkNextArticle, 100 );
+                    _timerSource.setTimeout( processArticlesList, 500 );
                 }
             }
 
@@ -350,7 +372,7 @@ function syncDeletedArticles( timerSource, props, cb )
                 http.send();
             }
 
-            timerSource.setTimeout( processArticlesList, 500 );
+            _timerSource.setTimeout( processArticlesList, 500 );
         }
     );
 }
@@ -527,7 +549,7 @@ function downloadArticles( props, cb )
                 if ( arts.length )
                     articles.push.apply( articles, arts );
                 if ( done )
-                    cb( articles, null );
+                    embedImages( articles, cb );
             }
         }
     );
@@ -589,6 +611,101 @@ function _downloadNextArticles( url, token, page, cb )
     http.send();
 }
 
+function embedImages( articles, cb )
+{
+    var ret = new Array;
+    var working = false;
+
+    function _processArticlesList() {
+        if ( !working && articles.length === 0 ) {
+            cb( ret, null );
+        }
+        else {
+            if ( !working )
+                _timerSource.setTimeout( _processNextArticle, 100 );
+            _timerSource.setTimeout( _processArticlesList, 500 );
+        }
+    }
+
+    function _processNextArticle() {
+        working = true;
+        var article = articles.pop();
+        console.debug( "Embedding images for article " + article.id );
+        console.debug( "Length is " + article.content.length + " before" );
+        _embedImages(
+            article,
+            function( content ) {
+                article.content = content;
+                console.debug( "Length is " + article.content.length + " after" );
+                ret.push( article );
+                working = false;
+            }
+        );
+    }
+
+    _timerSource.setTimeout( _processArticlesList, 100 );
+}
+
+function _embedImages( article, cb )
+{
+    var imgRe = /<img[^>]+\bsrc=(["'])(https?:\/\/.+?)\1[^>]+>/g;
+    var match;
+    var targets = new Array;
+    var content = article.content;
+
+    while ( match = imgRe.exec( content ) ) {
+        targets.push(
+            {
+                start: content.indexOf( match[2], match.index ),
+                url: match[2]
+            }
+        )
+    }
+
+    var working = false;
+    var offset = 0;
+
+    function _processImagesList() {
+        if ( !working && targets.length === 0 ) {
+            cb( content );
+        }
+        else {
+            if ( !working )
+                _timerSource.setTimeout( _downloadNextImage, 100 );
+            _timerSource.setTimeout( _processImagesList, 500 );
+        }
+    }
+
+    function _downloadNextImage() {
+        working = true;
+        var target = targets.pop();
+        console.debug( "Downloading image at " + target.url );
+
+        _imageEmbedder.embed(
+            target.url,
+            function( type, binary, err ) {
+                if ( err !== null ) {
+                    // No big deal, we'll just leave an external src for this
+                    // image.
+                    console.error( "Failed to download image at " + target.url + ": " + err );
+                }
+                else if ( type.length && type.substr( 0, 6 ) === "image/" && binary.length ) {
+                    console.debug( "Downloaded image at " + target.url + " with type " + type + ", size is " + binary.length );
+                    var replacement = "data:" + type + ";base64," + binary;
+                    var pre = content.substr( 0, target.start + offset );
+                    var post = content.substr( target.start + offset - target.url.length );
+                    content = pre + replacement + post;
+                    offset += replacement.length - target.url.length;
+                }
+
+                working = false;
+            }
+        );
+    }
+
+    _timerSource.setTimeout( _processImagesList, 100 );
+}
+
 function setArticleStar( server, id, star )
 {
     var db = getDatabase();
@@ -622,7 +739,7 @@ function getDatabase()
 {
     if ( _db === null ) {
         console.debug( "Opening new connection to the database" );
-        _db = Storage.LocalStorage.openDatabaseSync( "WallaRead", "", "WallaRead", 1000000 );
+        _db = Storage.LocalStorage.openDatabaseSync( "WallaRead", "", "WallaRead", 100000000 );
         checkDatabaseStatus( _db );
     }
 

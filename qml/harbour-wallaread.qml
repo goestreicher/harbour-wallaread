@@ -21,10 +21,36 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+
+import harbour.wallaread 1.0
+
 import "pages"
+
+import "./js/WallaBase.js" as WallaBase
 
 ApplicationWindow
 {
+    QtObject {
+        id: jsTimerSource
+
+        function setTimeout( cb, ms ) {
+            var timer = Qt.createQmlObject( "import QtQuick 2.0; Timer {}", jsTimerSource)
+            timer.repeat = false
+            timer.interval = ms
+            timer.triggered.connect( function() { cb(); timer.destroy(); } )
+            timer.start()
+        }
+    }
+
+    ImageEmbedder {
+        id: imageEmbedder
+    }
+
+    Component.onCompleted: {
+        WallaBase.setTimerSource( jsTimerSource )
+        WallaBase.setImageEmbedder( imageEmbedder )
+    }
+
     initialPage: Component { ServersPage { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: defaultAllowedOrientations

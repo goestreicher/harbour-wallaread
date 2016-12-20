@@ -526,6 +526,60 @@ function deleteArticle( server, id )
     );
 }
 
+function uploadNewArticle( props, articleUrl, cb )
+{
+    var url = props.url;
+    if ( url.charAt( url.length - 1 ) !== "/" )
+        url += "/";
+    url += "api/entries.json";
+
+    var params = "url=" + escape( articleUrl );
+
+    var http = new XMLHttpRequest;
+
+    http.onreadystatechange = function() {
+        if ( http.readyState === XMLHttpRequest.DONE ) {
+            var json = null;
+            var err = null;
+
+            if ( http.status === 200 ) {
+                try {
+                    json = JSON.parse( http.responseText );
+                }
+                catch( e ) {
+                    json = null;
+                    err = "failed to parse server response";
+                }
+
+                if ( err !== null )
+                    cb( json, err );
+                else
+                    _embedImages(
+                        json,
+                        function( content ) {
+                            json.content = content;
+                            cb( json, null );
+                        }
+                    )
+            }
+            else {
+                err = "server returned '" + http.statusText + "'";
+            }
+
+            cb( json, err );
+        }
+    };
+
+    http.open( "POST", url, true );
+    http.setRequestHeader( "Content-type", "application/x-www-form-urlencoded" );
+    http.setRequestHeader( "Content-length", params.length );
+    http.setRequestHeader( "Authorization:", "Bearer " + props.token );
+    http.setRequestHeader( "Accept", "application/json" );
+    http.setRequestHeader( "Connection", "close" );
+
+    http.send( params );
+}
+
 function downloadArticles( props, cb )
 {
     var url = props.url;

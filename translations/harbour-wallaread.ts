@@ -41,19 +41,15 @@
         <source>Failed to delete article: </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Failed to upload article: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ServerPage</name>
     <message>
-        <source>Refresh</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No articles saved on this server yet</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Deleting</source>
+        <source>Article URL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -70,6 +66,22 @@
     </message>
     <message>
         <source>Show read articles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No articles saved on this server yet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add article</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

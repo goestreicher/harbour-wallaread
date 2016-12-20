@@ -87,7 +87,99 @@ Page {
         }
     }
 
+    MouseArea {
+        id: addArticleContainer
+        width: parent.width
+        height: listView.height
+        x: 0
+        y: listView.height
+        z: 5
+
+        ParallelAnimation {
+            id: showAddArticleContainer
+
+            PropertyAnimation {
+                target: addArticleContainer
+                property: "y"
+                to: 0
+                duration: 150
+                easing.type: Easing.InOutQuad
+            }
+        }
+
+        ParallelAnimation {
+            id: hideAddArticleContainer
+
+            PropertyAnimation {
+                target: addArticleContainer
+                property: "y"
+                to: listView.height
+                duration: 150
+                easing.type: Easing.InOutQuad
+            }
+        }
+
+        Rectangle {
+            height: addArticleUrl.height + addArticleUrl.anchors.topMargin + addArticlesButtonRow.height
+            width: parent.width
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            color: "black"
+            opacity: 0.9
+        }
+
+        Item {
+            height: addArticleUrl.height + addArticleUrl.anchors.topMargin + addArticlesButtonRow.height
+            width: parent.width
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+
+            TextField {
+                id: addArticleUrl
+                width: parent.width
+                anchors.top: parent.top
+                anchors.topMargin: Theme.horizontalPageMargin
+                placeholderText: qsTr( "Article URL" )
+                inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhUrlCharactersOnly
+            }
+
+            Row {
+                id: addArticlesButtonRow
+                anchors.top: addArticleUrl.bottom
+                spacing: 2 * Theme.paddingLarge
+                width: addArticleCancel.width + addArticleConfirm.width + Theme.paddingLarge
+                x: ( parent.width / 2 ) - ( ( 2 * spacing + addArticleCancel.width + addArticleConfirm.width ) / 2 )
+
+                IconButton {
+                    id: addArticleCancel
+                    icon.source: "image://theme/icon-m-dismiss"
+
+                    onClicked: {
+                        addArticleUrl.text = ""
+                        hideAddArticleContainer.start()
+                    }
+                }
+
+                IconButton {
+                    id: addArticleConfirm
+                    icon.source: "image://theme/icon-m-acknowledge"
+
+                    onClicked: {
+                        serverPage.server.uploadArticle(
+                            addArticleUrl.text,
+                            function() {
+                                addArticleUrl.text = ""
+                                hideAddArticleContainer.start()
+                            }
+                        )
+                    }
+                }
+            }
+        }
+    }
+
     SilicaListView {
+        id: listView
         anchors.fill: parent
         spacing: Theme.paddingMedium
         model: articlesModel
@@ -118,6 +210,14 @@ Page {
                             server.getUpdatedArticles()
                         }
                     )
+                }
+            }
+
+            MenuItem {
+                text: qsTr( "Add article" )
+                onClicked: {
+                    showAddArticleContainer.start()
+                    addArticleUrl.focus = true
                 }
             }
         }

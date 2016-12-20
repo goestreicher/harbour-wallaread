@@ -9,6 +9,13 @@
     </message>
 </context>
 <context>
+    <name>ImageEmbedRequest</name>
+    <message>
+        <source>Failed to find the image source</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Server</name>
     <message>
         <source>Failed to load server information: </source>
@@ -24,15 +31,19 @@
     </message>
     <message>
         <source>Failed to set star status on article: </source>
-        <translation>Échec de la mise en favoris de l'article : </translation>
+        <translation>Échec de la mise en favoris de l&apos;article : </translation>
     </message>
     <message>
         <source>Failed to set read status on article: </source>
-        <translation>Échec du passage au statut lu de l'article : </translation>
+        <translation>Échec du passage au statut lu de l&apos;article : </translation>
     </message>
     <message>
         <source>Failed to delete article: </source>
-        <translation>Échec de la suppression de l'article : </translation>
+        <translation>Échec de la suppression de l&apos;article : </translation>
+    </message>
+    <message>
+        <source>Failed to upload article: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -43,7 +54,7 @@
     </message>
     <message>
         <source>No articles saved on this server yet</source>
-        <translation>Aucun article enregistré sur le serveur pour l'instant</translation>
+        <translation>Aucun article enregistré sur le serveur pour l&apos;instant</translation>
     </message>
     <message>
         <source>Deleting</source>
@@ -55,7 +66,7 @@
     </message>
     <message>
         <source>Show only starred articles</source>
-        <translation>Seulement afficher les articles en favoris></translation>
+        <translation>Seulement afficher les articles en favoris&gt;</translation>
     </message>
     <message>
         <source>Show unread articles</source>
@@ -64,6 +75,21 @@
     <message>
         <source>Show read articles</source>
         <translation>Afficher les articles lus</translation>
+    </message>
+    <message>
+        <source>Article URL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add article</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ServerSettings</name>
+    <message>
+        <source>Failed to load server settings: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

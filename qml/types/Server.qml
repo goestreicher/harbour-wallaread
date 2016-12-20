@@ -169,6 +169,48 @@ Item {
         articlesDownloaded( ret )
     }
 
+    function uploadArticle( articleUrl, cb ) {
+        connect(
+            function( err ) {
+                if ( err !== null ) {
+                    error( qsTr( "Failed to connect to server: " ) + err)
+                }
+                else {
+                    console.debug( "Sending a new article" )
+                    var props = { url: url, token: accessToken }
+                    WallaBase.uploadNewArticle( props, articleUrl, function( content, err ) { onUploadArticleDone( content, err ); cb(); } )
+                }
+            }
+        )
+    }
+
+    function onUploadArticleDone( current, err ) {
+        if ( err !== null ) {
+            error( qsTr( "Failed to upload article: " ) + err )
+        }
+        else {
+            var article = {
+                id: current.id,
+                server: serverId,
+                created: current.created_at,
+                updated: current.updated_at,
+                mimetype: current.mimetype,
+                language: current.language,
+                readingTime: current.reading_time,
+                url: current.url,
+                domain: current.domain_name,
+                archived: current.is_archived,
+                starred: current.is_starred,
+                title: current.title,
+                previewPicture: current.previewPicture,
+                content: current.content
+            }
+            WallaBase.saveArticle( article )
+        }
+
+        articlesDownloaded( [] )
+    }
+
     function toggleArticleStar( article, cb ) {
         connect(
             function( err ) {

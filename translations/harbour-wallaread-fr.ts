@@ -27,7 +27,7 @@
     </message>
     <message>
         <source>Failed to download articles: </source>
-        <translation>Échec du téléchargement des articles</translation>
+        <translation>Échec du téléchargement des articles : </translation>
     </message>
     <message>
         <source>Failed to set star status on article: </source>
@@ -66,7 +66,7 @@
     </message>
     <message>
         <source>Show only starred articles</source>
-        <translation>Seulement afficher les articles en favoris&gt;</translation>
+        <translation>Seulement afficher les articles en favoris</translation>
     </message>
     <message>
         <source>Show unread articles</source>

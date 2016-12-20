@@ -172,7 +172,7 @@ Page {
         width: parent.width
         height: listView.height
         x: 0
-        y: listView.height
+        y: - height
         z: 5
 
         ParallelAnimation {
@@ -182,7 +182,7 @@ Page {
                 target: addArticleContainer
                 property: "y"
                 to: 0
-                duration: 150
+                duration: 500
                 easing.type: Easing.InOutQuad
             }
         }
@@ -193,31 +193,41 @@ Page {
             PropertyAnimation {
                 target: addArticleContainer
                 property: "y"
-                to: listView.height
-                duration: 150
+                to: - addArticleContainer.height
+                duration: 500
                 easing.type: Easing.InOutQuad
             }
         }
 
         Rectangle {
-            height: addArticleUrl.height + addArticleUrl.anchors.topMargin + addArticlesButtonRow.height
+            height: addArticleInputContainer.height
             width: parent.width
-            anchors.bottom: parent.bottom
+            anchors.top: parent.top
             anchors.left: parent.left
             color: "black"
             opacity: 0.9
         }
 
         Item {
-            height: addArticleUrl.height + addArticleUrl.anchors.topMargin + addArticlesButtonRow.height
+            id: addArticleInputContainer
+            height: addArticleTitle.height + addArticleTitle.anchors.topMargin + addArticleUrl.height + addArticleUrl.anchors.topMargin + addArticlesButtonRow.height
             width: parent.width
-            anchors.bottom: parent.bottom
+            anchors.top: parent.top
             anchors.left: parent.left
+
+            Label {
+                id: addArticleTitle
+                text: qsTr( "Add article" )
+                anchors.top: parent.top
+                anchors.topMargin: Theme.horizontalPageMargin
+                x: Theme.horizontalPageMargin
+                font.pixelSize: Theme.fontSizeLarge
+            }
 
             TextField {
                 id: addArticleUrl
                 width: parent.width
-                anchors.top: parent.top
+                anchors.top: addArticleTitle.bottom
                 anchors.topMargin: Theme.horizontalPageMargin
                 placeholderText: qsTr( "Article URL" )
                 inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhUrlCharactersOnly
@@ -236,6 +246,7 @@ Page {
                     icon.source: "image://theme/icon-m-dismiss"
 
                     onClicked: {
+                        addArticleUrl.focus = false
                         addArticleUrl.text = ""
                         hideAddArticleContainer.start()
                     }

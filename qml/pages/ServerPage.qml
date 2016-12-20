@@ -67,16 +67,16 @@ Page {
         updateArticlesList()
     }
 
-    Rectangle {
+    MouseArea {
         id: busyContainer
         visible: !articlesModel.loaded
         anchors.fill: parent
-        color: "black"
-        opacity: 0.6
         z: 5
 
-        MouseArea {
+        Rectangle {
             anchors.fill: parent
+            color: "black"
+            opacity: 0.6
         }
 
         BusyIndicator {

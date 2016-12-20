@@ -167,9 +167,11 @@ Page {
                     onClicked: {
                         serverPage.server.uploadArticle(
                             addArticleUrl.text,
-                            function() {
-                                addArticleUrl.text = ""
-                                hideAddArticleContainer.start()
+                            function( success ) {
+                                if ( success ) {
+                                    addArticleUrl.text = ""
+                                    hideAddArticleContainer.start()
+                                }
                             }
                         )
                     }
@@ -249,10 +251,11 @@ Page {
                         articlesModel.remove( idx )
                         serverPage.server.deleteArticle(
                             id,
-                            function( err ) {
-                                if ( err !== null ) {
+                            function( success ) {
+                                if ( !success ) {
                                     showError( err )
-                                    // Just reload the whole list. May be inefficient though
+                                    // Reload the whole list, it's simpler than re-adding
+                                    // the removed article in the right place.
                                     serverPage.updateArticlesList()
                                 }
                             }
@@ -279,15 +282,10 @@ Page {
 
                             serverPage.server.toggleArticleStar(
                                 model,
-                                function( star, err ) {
+                                function( success ) {
                                     articleMenu.hide()
-
-                                    if ( err !== null ) {
-                                        showError( err )
-                                    }
-                                    else {
+                                    if ( success )
                                         serverPage.updateArticlesList()
-                                    }
                                 }
                             )
                         }
@@ -302,15 +300,10 @@ Page {
 
                             serverPage.server.toggleArticleRead(
                                 model,
-                                function( read, err ) {
+                                function( success ) {
                                     articleMenu.hide()
-
-                                    if ( err !== null ) {
-                                        showError( err )
-                                    }
-                                    else {
+                                    if ( success )
                                         serverPage.updateArticlesList()
-                                    }
                                 }
                             )
                         }

@@ -117,6 +117,8 @@ Item {
         )
     }
 
+    // No need for a callback here as the articlesDownloaded() signal will
+    // be emitted if there are any changes.
     function getUpdatedArticles() {
         connect(
             function( err ) {
@@ -173,12 +175,20 @@ Item {
         connect(
             function( err ) {
                 if ( err !== null ) {
-                    error( qsTr( "Failed to connect to server: " ) + err)
+                    error( qsTr( "Failed to connect to server: " ) + err )
+                    cb( false )
                 }
                 else {
                     console.debug( "Sending a new article" )
                     var props = { url: url, token: accessToken }
-                    WallaBase.uploadNewArticle( props, articleUrl, function( content, err ) { onUploadArticleDone( content, err ); cb(); } )
+                    WallaBase.uploadNewArticle(
+                        props,
+                        articleUrl,
+                        function( content, err ) {
+                            onUploadArticleDone( content, err )
+                            cb( err === null )
+                        }
+                    )
                 }
             }
         )
@@ -215,7 +225,8 @@ Item {
         connect(
             function( err ) {
                 if ( err !== null ) {
-                    cb( null, qsTr( "Failed to connect to server: " ) + err );
+                    error( qsTr( "Failed to connect to server: " ) + err );
+                    cb( false )
                 }
                 else {
                     var articleUrl = url
@@ -233,7 +244,8 @@ Item {
                         accessToken,
                         JSON.stringify( json ),
                         function( patchResponse, patchError ) {
-                            onToggleArticleStarDone( patchResponse, patchError, article, cb )
+                            onToggleArticleStarDone( patchResponse, patchError, article )
+                            cb( patchError === null )
                         }
                     )
                 }
@@ -241,15 +253,14 @@ Item {
         )
     }
 
-    function onToggleArticleStarDone( content, err, article, cb ) {
+    function onToggleArticleStarDone( content, err, article ) {
         if ( err !== null ) {
-            cb( null, qsTr( "Failed to set star status on article: " ) + err )
+            error( qsTr( "Failed to set star status on article: " ) + err )
         }
         else {
             console.debug( "Done toggling starred status for article " + article.id )
             var json = JSON.parse( content )
             WallaBase.setArticleStar( serverId, article.id, json.is_starred )
-            cb( json.is_starred, null )
         }
     }
 
@@ -257,7 +268,8 @@ Item {
         connect(
             function( err ) {
                 if ( err !== null ) {
-                    cb( null, qsTr( "Failed to connect to server: " ) + err )
+                    error( qsTr( "Failed to connect to server: " ) + err )
+                    cb( false )
                 }
                 else {
                     var articleUrl = url
@@ -275,7 +287,8 @@ Item {
                         accessToken,
                         JSON.stringify( json ),
                         function( patchResponse, patchError ) {
-                            onToggleArticleReadDone( patchResponse, patchError, article, cb )
+                            onToggleArticleReadDone( patchResponse, patchError, article )
+                            cb( patchError === null )
                         }
                     )
                 }
@@ -285,13 +298,12 @@ Item {
 
     function onToggleArticleReadDone( content, err, article, cb ) {
         if ( err !== null ) {
-            cb( null, qsTr( "Failed to set read status on article: " ) + err )
+            error( qsTr( "Failed to set read status on article: " ) + err )
         }
         else {
             console.debug( "Done toggling archived status for article " + article.id )
             var json = JSON.parse( content )
             WallaBase.setArticleRead( serverId, article.id, json.is_archived )
-            cb( json.is_archived, null )
         }
     }
 
@@ -299,7 +311,8 @@ Item {
         connect(
             function( err ) {
                 if ( err !== null ) {
-                    cb( qsTr( "Failed to connect to server: " ) + err )
+                    error( qsTr( "Failed to connect to server: " ) + err )
+                    cb( false )
                 }
                 else {
                     var articleUrl = url
@@ -313,7 +326,8 @@ Item {
                         articleUrl,
                         accessToken,
                         function( delResponse, delError ) {
-                            onDeleteArticleDone( delResponse, delError, id, cb )
+                            onDeleteArticleDone( delResponse, delError, id )
+                            cb( err === null )
                         }
 
                     )
@@ -324,12 +338,11 @@ Item {
 
     function onDeleteArticleDone( content, err, id, cb ) {
         if ( err !== null ) {
-            cb( qsTr( "Failed to delete article: " ) + err )
+            error( qsTr( "Failed to delete article: " ) + err )
         }
         else {
             console.debug( "Done deleting article " + id )
             WallaBase.deleteArticle( serverId, id )
-            cb( null )
         }
     }
 }

@@ -59,12 +59,75 @@ Page {
     }
 
     function showError( message ) {
-        // TODO: display this message to the user
-        console.error( message )
+        errorMessageText.text = message
+        showErrorWidget.start()
+        hideErrorWidgetTimer.start()
     }
 
     Component.onCompleted: {
         updateArticlesList()
+    }
+
+    Rectangle {
+        id: errorMessageWidget
+        width: parent.width
+        height: errorMessageText.contentHeight + 2 * Theme.horizontalPageMargin
+        y: - height
+        z: 5
+        color: Theme.highlightBackgroundColor
+
+        Timer {
+            id: hideErrorWidgetTimer
+            repeat: false
+            interval: 5000
+
+            onTriggered: {
+                hideErrorWidget.start()
+            }
+        }
+
+        ParallelAnimation {
+            id: showErrorWidget
+
+            PropertyAnimation {
+                target: errorMessageWidget
+                property: "y"
+                to: 0
+                duration: 150
+                easing.type: Easing.InOutQuad
+            }
+        }
+
+        ParallelAnimation {
+            id: hideErrorWidget
+
+            PropertyAnimation {
+                target: errorMessageWidget
+                property: "y"
+                to: - errorMessageWidget.height
+                duration: 300
+                easing.type: Easing.InOutQuad
+            }
+        }
+
+        MouseArea {
+            id: errorMessageContainer
+            anchors.fill: parent
+
+            Label {
+                id: errorMessageText
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                anchors.top: errorMessageContainer.top
+                anchors.topMargin: Theme.horizontalPageMargin
+                wrapMode: Text.WordWrap
+            }
+
+            onClicked: {
+                hideErrorWidgetTimer.stop()
+                hideErrorWidget.start()
+            }
+        }
     }
 
     MouseArea {

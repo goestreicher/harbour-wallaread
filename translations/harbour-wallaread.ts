@@ -169,4 +169,23 @@
         <translation type="unfinished"></translation>
     </message>
 </context>
+<context>
+    <name>WallaBase</name>
+    <message>
+        <source>Server not found in the configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to parse server response: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Server reply was </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Article not found in the cache</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>

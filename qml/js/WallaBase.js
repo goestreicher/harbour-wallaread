@@ -97,7 +97,7 @@ function getServer( id, cb )
             try {
                 var res = tx.executeSql( "SELECT id, name, url, lastSync FROM servers WHERE id=?", [ id ] );
                 if ( res.rows.length === 0 ) {
-                    err = "No server with this ID found";
+                    err = qsTr( "Server not found in the configuration" );
                 }
                 else {
                     server = res.rows.item( 0 );
@@ -123,7 +123,7 @@ function getServerSettings( id, cb )
             try {
                 var res = tx.executeSql( "SELECT * FROM servers WHERE id=?", [ id ] );
                 if ( res.rows.length === 0 ) {
-                    err = "No server with this ID found";
+                    err = qsTr( "Server not found in the configuration" );
                 }
                 else {
                     server = res.rows.item( 0 );
@@ -224,7 +224,7 @@ function connectToServer( id, cb )
             try {
                 var res = tx.executeSql( "SELECT url, user, password, clientId, clientSecret FROM servers WHERE id=?", [ id ] );
                 if ( res.rows.length === 0 ) {
-                    err = "No server with ID " + id + " found";
+                    err = qsTr( "Server not found in the configuration" );
                 }
                 else {
                     _sendAuthRequest( res.rows.item( 0 ), cb );
@@ -267,7 +267,7 @@ function _sendAuthRequest( props, cb )
                 }
                 catch( e ) {
                     json = null;
-                    err = "Failed to parse server response: " + e.message
+                    err = qsTr( "Failed to parse server response: " ) + e.message
                 }
             }
             else {
@@ -280,7 +280,7 @@ function _sendAuthRequest( props, cb )
                     }
                 }
 
-                err = "HTTP request failed: " + http.status;
+                err = qsTr( "Server reply was " ) + "'" + http.statusText + "'";
             }
 
             cb( json, err );
@@ -424,7 +424,7 @@ function articleExists( server, id, cb )
                     exists = ( res.rows[0].count === 0 ? false : true );
                 }
                 else {
-                    err = "Failed to get article from database when checking its existence";
+                    err = qsTr( "Article not found in the cache" );
                 }
             }
             catch( e ) {
@@ -548,7 +548,7 @@ function uploadNewArticle( props, articleUrl, cb )
                 }
                 catch( e ) {
                     json = null;
-                    err = "failed to parse server response";
+                    err = qsTr( "Failed to parse server response: " ) + e.message;
                 }
 
                 if ( err !== null )
@@ -563,7 +563,7 @@ function uploadNewArticle( props, articleUrl, cb )
                     )
             }
             else {
-                err = "server returned '" + http.statusText + "'";
+                err = qsTr( "Server reply was " ) + "'" + http.statusText + "'";
             }
 
             cb( json, err );
@@ -634,7 +634,7 @@ function _downloadNextArticles( url, token, page, cb )
                 }
                 catch( e ) {
                     json = null;
-                    err = "Failed to parse server response: " + e.message
+                    err = qsTr( "Failed to parse server response: " ) + e.message
                 }
             }
             else {
@@ -647,7 +647,7 @@ function _downloadNextArticles( url, token, page, cb )
                     }
                 }
 
-                err = "HTTP request failed: " + http.status;
+                err = qsTr( "Server reply was " ) + "'" + http.statusText + "'";
             }
 
             cb( articles, done, err );

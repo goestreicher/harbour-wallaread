@@ -64,6 +64,23 @@ Page {
         hideErrorWidgetTimer.start()
     }
 
+    function doAddArticle( url ) {
+        articlesModel.loaded = false
+        serverPage.server.uploadArticle(
+            addArticleUrl.text,
+            function( success ) {
+                if ( success ) {
+                    addArticleUrl.text = ""
+                    hideAddArticleContainer.start()
+                    serverPage.updateArticlesList()
+                }
+                else {
+                    articlesModel.loaded = true;
+                }
+            }
+        )
+    }
+
     Component.onCompleted: {
         updateArticlesList()
     }
@@ -134,7 +151,7 @@ Page {
         id: busyContainer
         visible: !articlesModel.loaded
         anchors.fill: parent
-        z: 5
+        z: 10
 
         Rectangle {
             anchors.fill: parent
@@ -204,6 +221,7 @@ Page {
                 anchors.topMargin: Theme.horizontalPageMargin
                 placeholderText: qsTr( "Article URL" )
                 inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhUrlCharactersOnly
+                EnterKey.onClicked: doAddArticle( addArticleUrl.text )
             }
 
             Row {
@@ -226,18 +244,7 @@ Page {
                 IconButton {
                     id: addArticleConfirm
                     icon.source: "image://theme/icon-m-acknowledge"
-
-                    onClicked: {
-                        serverPage.server.uploadArticle(
-                            addArticleUrl.text,
-                            function( success ) {
-                                if ( success ) {
-                                    addArticleUrl.text = ""
-                                    hideAddArticleContainer.start()
-                                }
-                            }
-                        )
-                    }
+                    onClicked: doAddArticle( addArticleUrl.text )
                 }
             }
         }

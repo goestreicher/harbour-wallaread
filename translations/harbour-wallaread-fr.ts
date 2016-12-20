@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="fr">
 <context>
     <name>CoverPage</name>
     <message>
@@ -12,7 +12,7 @@
     <name>ImageEmbedRequest</name>
     <message>
         <source>Failed to find the image source</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de trouver la source de l&apos;image</translation>
     </message>
 </context>
 <context>
@@ -43,7 +43,7 @@
     </message>
     <message>
         <source>Failed to upload article: </source>
-        <translation type="unfinished"></translation>
+        <translation>Échec de l&apos;envoi de l&apos;article : </translation>
     </message>
 </context>
 <context>
@@ -78,18 +78,18 @@
     </message>
     <message>
         <source>Article URL</source>
-        <translation type="unfinished"></translation>
+        <translation>URL de l&apos;article</translation>
     </message>
     <message>
         <source>Add article</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter un article</translation>
     </message>
 </context>
 <context>
     <name>ServerSettings</name>
     <message>
         <source>Failed to load server settings: </source>
-        <translation type="unfinished"></translation>
+        <translation>Échec du chargement de la configuration : </translation>
     </message>
 </context>
 <context>
@@ -173,19 +173,19 @@
     <name>WallaBase</name>
     <message>
         <source>Server not found in the configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de trouver la configuration du serveur</translation>
     </message>
     <message>
         <source>Failed to parse server response: </source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;interpréter la réponse du serveur : </translation>
     </message>
     <message>
         <source>Server reply was </source>
-        <translation type="unfinished"></translation>
+        <translation>Le serveur a répondu</translation>
     </message>
     <message>
         <source>Article not found in the cache</source>
-        <translation type="unfinished"></translation>
+        <translation>Article absent du cache</translation>
     </message>
 </context>
 </TS>

@@ -139,7 +139,7 @@
     </message>
     <message>
         <source>Wallabag servers</source>
-        <translation>Serveur Wallabag</translation>
+        <translation>Serveurs Wallabag</translation>
     </message>
     <message>
         <source>No servers configured yet, create your first one with the Settings menu</source>

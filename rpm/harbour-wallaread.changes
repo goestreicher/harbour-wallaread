@@ -1,3 +1,8 @@
+* Wed Dec 21 2016 Grégory Oestreicher <greg@kamago.net> 0.3-1
+- Supports embedding images in articles
+- Adding articles is now supported
+- French translation courtesy of Quentin P.
+
 * Sun Dec 18 2016 Grégory Oestreicher <greg@kamago.net> 0.2-1
 - Fixed synchronization bugs with wallabag.it and maybe other installations
 - Added server deletion from the main page

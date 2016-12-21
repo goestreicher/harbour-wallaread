@@ -107,8 +107,9 @@ void HttpDeleteRequest::onRequestDone()
 {
     QString content;
     QString error;
+    int status = mReply->attribute( QNetworkRequest::HttpStatusCodeAttribute ).toInt();
 
-    if ( mReply->error() ) {
+    if ( mReply->error() && !( status == 404 || status == 410 ) ) {
         error = "Network error: ";
         error.append( mReply->errorString() );
     }

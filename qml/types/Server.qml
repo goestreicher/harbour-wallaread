@@ -124,6 +124,7 @@ Item {
             function( err ) {
                 if ( err !== null ) {
                     error( qsTr( "Failed to connect to server: " ) + err)
+                    articlesDownloaded( [] )
                 }
                 else {
                     console.debug( "Downloading articles changes since last sync" )

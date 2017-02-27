@@ -23,13 +23,19 @@
 .import QtQuick.LocalStorage 2.0 as Storage
 
 /*
-  Exposed variable
+  Exposed variables
  */
 
 var ArticlesFilter = {
     All: 1,
     Read: 2,
     Starred: 4
+}
+
+var ArticlesSort = {
+    Created: 1,
+    Updated: 2,
+    Domain: 3
 }
 
 /*
@@ -380,7 +386,7 @@ function syncDeletedArticles( props, cb )
     );
 }
 
-function getArticles( serverId, cb, filter )
+function getArticles( serverId, cb, filter, sortOrder, sortAsc )
 {
     var db = getDatabase();
 
@@ -389,6 +395,7 @@ function getArticles( serverId, cb, filter )
             var articles = new Array
             var err = null;
             var where = "";
+            var order = "";
 
             if ( filter & ArticlesFilter.Read )
                 where += " AND archived=1";
@@ -398,8 +405,22 @@ function getArticles( serverId, cb, filter )
             if ( filter & ArticlesFilter.Starred )
                 where += " AND starred=1";
 
+            if ( sortOrder === ArticlesSort.Created )
+                order = " ORDER BY created";
+            else if ( sortOrder === ArticlesSort.Updated )
+                order = " ORDER BY updated"
+            else if ( sortOrder === ArticlesSort.Domain )
+                order = " ORDER BY domain"
+
+            if ( order.length > 0 ) {
+                if ( sortAsc )
+                    order += " ASC"
+                else
+                    order += " DESC"
+            }
+
             try {
-                var res = tx.executeSql( "SELECT * FROM articles WHERE server=?" + where, [ serverId ] );
+                var res = tx.executeSql( "SELECT * FROM articles WHERE server=?" + where + order, [ serverId ] );
                 for ( var i = 0; i < res.rows.length; ++i ) {
                     articles.push( res.rows[i] );
                 }

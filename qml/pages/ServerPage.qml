@@ -32,7 +32,6 @@ Page {
 
     property int serverId
     property alias server: server
-    property alias showPreferences: showPreferences
 
     Server {
         id: server
@@ -49,6 +48,10 @@ Page {
 
     ServerPageShowPreferences {
         id: showPreferences
+    }
+
+    ServerPageSortPreferences {
+        id: sortPreferences
     }
 
     ArticlesModel {
@@ -273,6 +276,18 @@ Page {
         model: articlesModel
 
         PullDownMenu {
+            MenuItem {
+                text: qsTr( "Sort: " ) + sortPreferences.getVisibleDescription()
+                onClicked: {
+                    var dlg = pageStack.push( Qt.resolvedUrl( "ServerPageSortDialog.qml" ), { preferences: sortPreferences } )
+                    dlg.accepted.connect ( function() {
+                        articlesModel.sortOrder = sortPreferences.sortOrder
+                        articlesModel.sortAsc = sortPreferences.sortAsc
+                        serverPage.updateArticlesList()
+                    } )
+                }
+            }
+
             MenuItem {
                 text: qsTr( "Show: " ) + showPreferences.getVisibleDescription()
                 onClicked: {

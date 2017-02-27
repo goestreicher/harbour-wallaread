@@ -30,6 +30,8 @@ ListModel {
     property bool showAll: false
     property bool showRead: false
     property bool showStarred: false
+    property int sortOrder: WallaBase.ArticlesSort.Created
+    property bool sortAsc: true
 
     signal error( string message )
 
@@ -48,7 +50,7 @@ ListModel {
                 filter |= WallaBase.ArticlesFilter.Starred
         }
 
-        WallaBase.getArticles( serverId, onArticlesLoaded, filter )
+        WallaBase.getArticles( serverId, onArticlesLoaded, filter, sortOrder, sortAsc )
     }
 
     function onArticlesLoaded( articles, err ) {

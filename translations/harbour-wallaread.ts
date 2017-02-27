@@ -53,22 +53,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Show unstarred articles</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show only starred articles</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show unread articles</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show read articles</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
@@ -86,6 +70,10 @@
     </message>
     <message>
         <source>Show: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -120,6 +108,36 @@
     </message>
     <message>
         <source>all</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ServerPageSortDialog</name>
+    <message>
+        <source>Sort view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort Ascending</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ServerPageSortPreferences</name>
+    <message>
+        <source>Created</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Updated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Domain</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

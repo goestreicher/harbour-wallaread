@@ -61,22 +61,6 @@
         <translation>Suppression</translation>
     </message>
     <message>
-        <source>Show unstarred articles</source>
-        <translation>Afficher les articles hors favoris</translation>
-    </message>
-    <message>
-        <source>Show only starred articles</source>
-        <translation>Seulement afficher les articles en favoris</translation>
-    </message>
-    <message>
-        <source>Show unread articles</source>
-        <translation>Afficher les articles non lus</translation>
-    </message>
-    <message>
-        <source>Show read articles</source>
-        <translation>Afficher les articles lus</translation>
-    </message>
-    <message>
         <source>Article URL</source>
         <translation>URL de l&apos;article</translation>
     </message>
@@ -87,6 +71,10 @@
     <message>
         <source>Show: </source>
         <translation>Afficher : </translation>
+    </message>
+    <message>
+        <source>Sort: </source>
+        <translation>Tri : </translation>
     </message>
 </context>
 <context>
@@ -121,6 +109,36 @@
     <message>
         <source>all</source>
         <translation>tous</translation>
+    </message>
+</context>
+<context>
+    <name>ServerPageSortDialog</name>
+    <message>
+        <source>Sort view</source>
+        <translation>Trier la liste</translation>
+    </message>
+    <message>
+        <source>Sort order</source>
+        <translation>Ordre de tri</translation>
+    </message>
+    <message>
+        <source>Sort Ascending</source>
+        <translation>Trier par ordre croissant</translation>
+    </message>
+</context>
+<context>
+    <name>ServerPageSortPreferences</name>
+    <message>
+        <source>Created</source>
+        <translation>Création</translation>
+    </message>
+    <message>
+        <source>Updated</source>
+        <translation>Modification</translation>
+    </message>
+    <message>
+        <source>Domain</source>
+        <translation>Domaine</translation>
     </message>
 </context>
 <context>

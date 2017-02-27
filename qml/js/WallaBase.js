@@ -250,10 +250,10 @@ function _sendAuthRequest( props, cb )
 
     var http = new XMLHttpRequest();
     var params = "grant_type=password";
-    params += "&username=" + escape( props.user );
-    params += "&password=" + escape( props.password );
-    params += "&client_id=" + escape( props.clientId );
-    params += "&client_secret=" + escape( props.clientSecret );
+    params += "&username=" + encodeURIComponent( props.user );
+    params += "&password=" + encodeURIComponent( props.password );
+    params += "&client_id=" + encodeURIComponent( props.clientId );
+    params += "&client_secret=" + encodeURIComponent( props.clientSecret );
 
     http.onreadystatechange = function() {
         if ( http.readyState === XMLHttpRequest.DONE ) {
@@ -533,7 +533,7 @@ function uploadNewArticle( props, articleUrl, cb )
         url += "/";
     url += "api/entries.json";
 
-    var params = "url=" + escape( articleUrl );
+    var params = "url=" + encodeURIComponent( articleUrl );
 
     var http = new XMLHttpRequest;
 

@@ -31,6 +31,7 @@ QtObject {
     property string password
     property string clientId
     property string clientSecret
+    property bool fetchUnread
 
     signal error( string message )
 
@@ -46,6 +47,7 @@ QtObject {
             password = null
             clientId = null
             clientSecret = null
+            fetchUnread = false
         }
     }
 
@@ -60,6 +62,7 @@ QtObject {
             password = props.password
             clientId = props.clientId
             clientSecret = props.clientSecret
+            fetchUnread = props.fetchUnread !== 0
         }
     }
 }

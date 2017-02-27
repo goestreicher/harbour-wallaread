@@ -95,7 +95,7 @@ function getServer( id, cb )
         function( tx ) {
             var server = null;
             try {
-                var res = tx.executeSql( "SELECT id, name, url, lastSync FROM servers WHERE id=?", [ id ] );
+                var res = tx.executeSql( "SELECT id, name, url, lastSync, fetchUnread FROM servers WHERE id=?", [ id ] );
                 if ( res.rows.length === 0 ) {
                     err = qsTr( "Server not found in the configuration" );
                 }
@@ -145,14 +145,15 @@ function addNewServer( props )
     db.transaction(
         function( tx ) {
             // TODO: try/catch here when error management is in place in the UI
-            tx.executeSql( "INSERT INTO servers(name, url, user, password, clientId, clientSecret) VALUES(?, ?, ?, ?, ?, ?)",
+            tx.executeSql( "INSERT INTO servers(name, url, user, password, clientId, clientSecret, fetchUnread) VALUES(?, ?, ?, ?, ?, ?, ?)",
                            [
                               props.name,
                               props.url,
                               props.user,
                               props.password,
                               props.clientId,
-                              props.clientSecret
+                              props.clientSecret,
+                              props.fetchUnread ? 1 : 0
                            ]
                          );
         }
@@ -172,7 +173,8 @@ function updateServer( id, props )
                            "user=?, " +
                            "password=?, " +
                            "clientId=?, " +
-                           "clientSecret=? " +
+                           "clientSecret=?, " +
+                           "fetchUnread=? " +
                            "WHERE id=?",
                            [
                               props.name,
@@ -181,6 +183,7 @@ function updateServer( id, props )
                               props.password,
                               props.clientId,
                               props.clientSecret,
+                              props.fetchUnread ? 1 : 0,
                               id
                            ]
                          );
@@ -587,6 +590,9 @@ function downloadArticles( props, cb )
         url += "/";
     url += "api/entries.json";
     url += "?since=" + props.since;
+    // We only use the archive flag to filter out read articles
+    if ( 'archive' in props && props.archive === 0 )
+        url += '&archive=' + props.archive
     url += "&perPage=10";
 
     var articles = new Array;
@@ -805,8 +811,13 @@ function checkDatabaseStatus( db )
     if ( db.version === "" ) {
         createLatestDatabase( db );
     }
+    // _updateSchema_v* will take care of calling the relevant update methods
+    // to bring the database to the latest version
     else if ( db.version === "0.2" ) {
         _updateSchema_v3( db );
+    }
+    else if ( db.version === "0.3" ) {
+        _updateSchema_v4( db )
     }
 }
 
@@ -825,7 +836,8 @@ function createLatestDatabase( db )
                                "password TEXT NOT NULL, " +
                                "clientId TEXT NOT NULL, " +
                                "clientSecret TEXT NOT NULL, " +
-                               "lastSync INTEGER DEFAULT 0" +
+                               "lastSync INTEGER DEFAULT 0," +
+                               "fetchUnread INTEGER DEFAULT 0" +
                                ")"
                              );
 
@@ -898,6 +910,19 @@ function _updateSchema_v3( db )
             tx.executeSql( "ALTER TABLE articles_next RENAME TO articles" );
 
             db.changeVersion( db.version, "0.3" );
+            _updateSchema_v4( db )
+        }
+    );
+}
+
+function _updateSchema_v4( db )
+{
+    db.transaction(
+        function( tx ) {
+            tx.executeSql( "ALTER TABLE servers ADD COLUMN fetchUnread INTEGER DEFAULT 0" );
+            tx.executeSql( "UPDATE servers SET fetchUnread=0" );
+
+            db.changeVersion( db.version, "0.4" );
         }
     );
 }

@@ -126,6 +126,10 @@
         <source>Client Secret</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Fetch unread/archived articles</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ServersPage</name>

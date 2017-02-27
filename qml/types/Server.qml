@@ -35,6 +35,7 @@ Item {
     property string refreshToken
     property string tokenType
     property int tokenExpiry: 0
+    property bool fetchUnread: false
 
     signal articlesDownloaded( var list )
     signal connected
@@ -53,6 +54,7 @@ Item {
             refreshToken = null
             tokenType = null
             tokenExpiry = 0
+            fetchUnread = false
         }
     }
 
@@ -68,6 +70,7 @@ Item {
             name = props.name
             url = props.url
             lastSync = props.lastSync
+            fetchUnread = props.fetchUnread === 1
         }
     }
 
@@ -128,7 +131,7 @@ Item {
                 }
                 else {
                     console.debug( "Downloading articles changes since last sync" )
-                    var props = { url: url, since: lastSync, accessToken: accessToken }
+                    var props = { url: url, since: lastSync, accessToken: accessToken, archive: fetchUnread ? 1 : 0 }
                     WallaBase.downloadArticles( props, onGetUpdatedArticlesDone )
                 }
             }

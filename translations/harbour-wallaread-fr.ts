@@ -126,6 +126,10 @@
         <source>Client Secret</source>
         <translation>Secret du client</translation>
     </message>
+    <message>
+        <source>Fetch unread/archived articles</source>
+        <translation>Télécharger les articles lus / archivés</translation>
+    </message>
 </context>
 <context>
     <name>ServersPage</name>

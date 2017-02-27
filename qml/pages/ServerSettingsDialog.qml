@@ -49,7 +49,8 @@ Dialog {
             user: userField.text,
             password: passwordField.text,
             clientId: clientIdField.text,
-            clientSecret: clientSecretField.text
+            clientSecret: clientSecretField.text,
+            fetchUnread: fetchUnreadSwitch.checked
         }
 
         if ( serverId === -1 )
@@ -131,6 +132,13 @@ Dialog {
                 placeholderText: qsTr( "Client Secret" )
                 text: serverSettings.clientSecret
                 inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase | Qt.ImhSensitiveData
+            }
+
+            TextSwitch {
+                id: fetchUnreadSwitch
+                width: parent.width
+                checked: serverSettings.fetchUnread
+                text: qsTr( "Fetch unread/archived articles" )
             }
         }
     }

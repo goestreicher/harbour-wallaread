@@ -32,6 +32,7 @@ Page {
 
     property int serverId
     property alias server: server
+    property alias showPreferences: showPreferences
 
     Server {
         id: server
@@ -44,6 +45,10 @@ Page {
         onError: {
             showError( message )
         }
+    }
+
+    ServerPageShowPreferences {
+        id: showPreferences
     }
 
     ArticlesModel {
@@ -269,18 +274,14 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: articlesModel.showStarred ? qsTr( "Show unstarred articles" ) : qsTr( "Show only starred articles" )
+                text: qsTr( "Show: " ) + showPreferences.getVisibleDescription()
                 onClicked: {
-                    articlesModel.showStarred = !articlesModel.showStarred
-                    serverPage.updateArticlesList()
-                }
-            }
-
-            MenuItem {
-                text: articlesModel.showRead ? qsTr( "Show unread articles" ) : qsTr( "Show read articles" )
-                onClicked: {
-                    articlesModel.showRead = !articlesModel.showRead
-                    serverPage.updateArticlesList()
+                    var dlg = pageStack.push( Qt.resolvedUrl( "ServerPageShowDialog.qml" ), { preferences: showPreferences } )
+                    dlg.accepted.connect( function() {
+                        articlesModel.showStarred = showPreferences.starred
+                        articlesModel.showRead = showPreferences.read
+                        serverPage.updateArticlesList()
+                    } )
                 }
             }
 

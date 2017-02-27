@@ -84,6 +84,44 @@
         <source>Add article</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Show: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ServerPageShowDialog</name>
+    <message>
+        <source>Filter view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Read articles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starred articles</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ServerPageShowPreferences</name>
+    <message>
+        <source>read</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unread</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>starred</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>all</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ServerSettings</name>

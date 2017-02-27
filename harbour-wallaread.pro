@@ -52,4 +52,6 @@ DISTFILES += \
     qml/pages/SettingsPage.qml \
     qml/types/Server.qml \
     qml/types/ServerSettings.qml \
-    rpm/harbour-wallaread.changes
+    rpm/harbour-wallaread.changes \
+    qml/pages/ServerPageShowDialog.qml \
+    qml/types/ServerPageShowPreferences.qml

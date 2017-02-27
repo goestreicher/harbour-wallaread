@@ -84,6 +84,44 @@
         <source>Add article</source>
         <translation>Ajouter un article</translation>
     </message>
+    <message>
+        <source>Show: </source>
+        <translation>Afficher : </translation>
+    </message>
+</context>
+<context>
+    <name>ServerPageShowDialog</name>
+    <message>
+        <source>Filter view</source>
+        <translation>Filtrer la liste</translation>
+    </message>
+    <message>
+        <source>Read articles</source>
+        <translation>Articles lus</translation>
+    </message>
+    <message>
+        <source>Starred articles</source>
+        <translation>Articles favoris</translation>
+    </message>
+</context>
+<context>
+    <name>ServerPageShowPreferences</name>
+    <message>
+        <source>read</source>
+        <translation>lus</translation>
+    </message>
+    <message>
+        <source>unread</source>
+        <translation>non lus</translation>
+    </message>
+    <message>
+        <source>starred</source>
+        <translation>favoris</translation>
+    </message>
+    <message>
+        <source>all</source>
+        <translation>tous</translation>
+    </message>
 </context>
 <context>
     <name>ServerSettings</name>

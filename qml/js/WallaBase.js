@@ -896,11 +896,8 @@ function _updateSchema_v3( db )
             tx.executeSql( "INSERT INTO articles_next SELECT * FROM articles" );
             tx.executeSql( "DROP TABLE articles" );
             tx.executeSql( "ALTER TABLE articles_next RENAME TO articles" );
-        },
-        function() {
-        },
-        function() {
-            db.changeVersion( version, "0.3" );
+
+            db.changeVersion( db.version, "0.3" );
         }
     );
 }

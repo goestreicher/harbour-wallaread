@@ -1,3 +1,9 @@
+* Mon Feb 27 2017 Grégory Oestreicher <greg@kamago.net> 0.4-1
+- Add an option to download only unread articles
+- Fix a bug where password (and others) were not correctly URL-encoded
+- Add sorting options in the articles list
+- Rework the articles list filtering to limit menu creep
+
 * Wed Dec 21 2016 Grégory Oestreicher <greg@kamago.net> 0.3-1
 - Supports embedding images in articles
 - Adding articles is now supported
